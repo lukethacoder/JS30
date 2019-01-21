@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,700" rel="stylesheet">
+</head>
+<body>
+
+  <div class="keys">
+    <div class="top_keys">
+      <div data-key="81" class="key"></div>
+      <div data-key="87" class="key"></div>
+      <div data-key="69" class="key"></div>
+      <div data-key="82" class="key"></div>
+      <div data-key="84" class="key"></div>
+      <div data-key="89" class="key"></div>
+      <div data-key="85" class="key"></div>
+      <div data-key="73" class="key"></div>
+      <div data-key="79" class="key"></div>
+      <div data-key="80" class="key"></div>
+    </div>
+    <div class="main_keys">
+
+    
+      <div data-key="65" class="key">
+        <kbd>A</kbd>
+        <span class="sound">openhat</span>
+      </div>
+      <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">hihat 1</span>
+      </div>
+      <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">hihat 2</span>
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">clap</span>
+      </div>
+      <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">snare</span>
+      </div>
+      <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">kick 1</span>
+      </div>
+      <div data-key="74" class="key">
+        <kbd>J</kbd>
+        <span class="sound">kick 2</span>
+      </div>
+      <div data-key="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">jingle</span>
+      </div>
+      <div data-key="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">tambo</span>
+      </div>
+    </div>
+
+  </div>
+
+  <audio data-key="65" src="sounds/dre-hat-03.wav"></audio>
+  <audio data-key="83" src="sounds/dre-hat-02.wav"></audio>
+  <audio data-key="68" src="sounds/dre-hat-01.wav"></audio>
+  <audio data-key="70" src="sounds/dre-clap.wav"></audio>
+  <audio data-key="71" src="sounds/dre-phat-snare.wav"></audio>
+  <audio data-key="72" src="sounds/dre-kick.wav"></audio>
+  <audio data-key="74" src="sounds/dre-sub-kick.wav"></audio>
+  <audio data-key="75" src="sounds/jingle.wav"></audio>
+  <audio data-key="76" src="sounds/tambourine.wav"></audio>
+
+  
+  <audio data-key="81" src="sounds/dre-keyz.wav"></audio>
+  <audio data-key="87" src="sounds/01-flexi-up.wav"></audio>
+  <audio data-key="69" src="sounds/02-flexi-up.wav"></audio>
+  <audio data-key="82" src="sounds/tr1.wav"></audio>
+
+  <audio data-key="84" src="sounds/huhh-01.wav"></audio>
+  <audio data-key="89" src="sounds/huhh-02.wav"></audio>
+  <audio data-key="85" src="sounds/huhh-03.wav"></audio>
+
+  <audio data-key="73" src="sounds/shaker.wav"></audio>
+  <audio data-key="79" src="sounds/dre-hit-01.wav"></audio>
+  <audio data-key="80" src="sounds/dre-hit-02.wav"></audio>
+
+  
+  <audio data-key="90" src="sounds/vocal-A4.wav"></audio>
+  <audio data-key="88" src="sounds/vocal-A5.wav"></audio>
+  <audio data-key="67" src="sounds/vocal-F4.wav"></audio>
+  <audio data-key="86" src="sounds/vocal-F5.wav"></audio>
+
+<script>
+
+
+function playSound(e) {
+  console.log('e => ', e)
+  console.log('this => ', this)
+
+  if (e.type === 'click') {
+    console.log('item was clicked')
+    const audio = document.querySelector(`audio[data-key="${this.dataset.key}"]`);
+    const key = document.querySelector(`.key[data-key="${this.dataset.key}"]`);
+
+    if(!audio) return; // stop function
+
+    audio.currentTime = 0; // resets for multiple clicks
+    audio.play();
+
+    console.log(key)
+    key.classList.add('playing');
+  } 
+  else {
+    console.log('item was clicked')
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+    if(!audio) return; // stop function
+
+    audio.currentTime = 0; // resets for multiple clicks
+    audio.play();
+
+    console.log(key)
+    key.classList.add('playing');
+  }
+
+  
+}
+
+function removeTrans(e) {
+  if (e.propertyName !== 'transform') return; // skip if not transformed
+  this.classList.remove('playing');
+}
+
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTrans));
+keys.forEach(key => key.addEventListener('click', playSound));
+window.addEventListener('keydown', playSound);
+
+
+</script>
+
+
+</body>
+</html>
