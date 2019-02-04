@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+const pressed = [];
+const secretCodes = ['red', 'green', 'peru', 'soda', 'blue', 'pink', 'teal', 'lsd', 'dsl'];
+
+window.addEventListener('keyup', (e) => {
+  pressed.push(e.key);
+  pressed.splice(-10 - 1, pressed.length - 10);
+  let stringedVersion = pressed.join('');
+  secretCodes.forEach((key) => { 
+    if (stringedVersion.includes('soda')) {
+      document.querySelector('body').style.backgroundColor = '#1F0047';
+      pressed.length = 0;
+    }
+    if (stringedVersion.includes('dsl')) {
+      document.querySelector('body').style.backgroundColor = '#141414';
+      pressed.length = 0;
+    }
+    if (stringedVersion.includes('lsd')) {
+      document.querySelector('body').style.backgroundColor = '#FFC87F';
+      pressed.length = 0;
+    }
+    if (stringedVersion.includes(key)) {
+      document.querySelector('body').style.backgroundColor = key;
+      pressed.length = 0;
+    }
+  });
+});
+</script>
+</body>
+</html>
